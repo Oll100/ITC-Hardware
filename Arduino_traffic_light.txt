@@ -1,0 +1,79 @@
+int button = 2;
+int ped_green = 3;
+int ped_red = 4;
+int car_green = 5;
+int car_yellow = 6;
+int car_red = 7;
+int on = HIGH;
+int off = LOW;
+int pedestrian_requested_crossing = LOW;
+
+void setup() {
+    pinMode(ped_green, OUTPUT);
+    pinMode(ped_red, OUTPUT);
+    pinMode(car_green, OUTPUT);
+    pinMode(car_yellow, OUTPUT);
+    pinMode(car_red, OUTPUT);
+    digitalWrite(car_red, off);
+    digitalWrite(car_yellow, off);
+    digitalWrite(car_green, off);
+    digitalWrite(ped_red, off);
+    digitalWrite(ped_green, off);  
+    digitalWrite(button, on);
+    attachInterrupt(0, onButtonPressed, FALLING);
+}
+
+void onButtonPressed() {
+    pedestrian_requested_crossing = on;
+}
+
+void loop() {
+    Serial.println("Cars green, pedestrian red");
+    digitalWrite(car_red, off);
+    digitalWrite(car_yellow, off);
+    digitalWrite(car_green, on);
+    digitalWrite(ped_red, on);
+    digitalWrite(ped_green, off);
+    
+    if(pedestrian_requested_crossing == on) {
+  
+        Serial.println("Cars green, pedestrians red for 10 seconds");
+        digitalWrite(car_red, off);
+        digitalWrite(car_yellow, off);
+        digitalWrite(car_green, on);
+        digitalWrite(ped_red, on);
+        digitalWrite(ped_green, off);
+        delay(10000);
+
+        Serial.println("Green for cars is blinking for some amount of time");
+        for(int j = 0; j < 6; j++) {
+            digitalWrite(car_green, j % 2 == 0);
+            delay(500);
+        }
+    
+        Serial.println("Yellow for cars, red for pedestrians for 2 seconds");
+        digitalWrite(car_red, off);
+        digitalWrite(car_yellow, on);
+        digitalWrite(car_green, off);
+        digitalWrite(ped_red, on);
+        digitalWrite(ped_green, off);
+        delay(2000);
+
+        Serial.println("Cars red, pedestrians green for 10 seconds");
+        digitalWrite(car_green, off);
+        digitalWrite(car_yellow, off);
+        digitalWrite(car_red, on);
+        digitalWrite(ped_red, off);
+        digitalWrite(ped_green, on);
+        delay(10000);
+    
+        Serial.println("Cars red, pedestrians green blinking for some seconds");
+        for(int k = 0; k < 6; k++) {
+            digitalWrite(ped_green, k % 2 == 0);
+            delay(500);
+        }
+        
+        pedestrian_requested_crossing = off;
+    }
+}
+
