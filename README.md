@@ -9,6 +9,4 @@ The code on this repository must be used responsibly and only after anyone wishi
 
 Theoretically, all the code here should be made by the creator of this repository.
 
-Let us take assume that this project has been edited a few times over the past few day or days.
-
-
+If you find something you dislike on this repository, then the creator is not to be held accountable. Browse at your own risk.
